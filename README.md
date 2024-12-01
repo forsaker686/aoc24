@@ -1,2 +1,2 @@
 # aoc24
-advent of code 2024
+My solutions for advent of code 2024, mostly in php
