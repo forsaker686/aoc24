@@ -60,4 +60,7 @@ foreach($varne as $varna) {
 }
 
 echo 'part 1: '.count($safe);
+
+//part 2
+//https://github.com/dannyvankooten/advent-of-code/blob/main/2024-php/02.php
 ?>
