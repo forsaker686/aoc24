@@ -1,14 +1,10 @@
 <?php
-$vnos = fopen("day3_e.txt", "r") or die("Unable to open file!");
-$podatki = fread($vnos,filesize("day3_e.txt"));
+$vnos = fopen("day3.txt", "r") or die("Unable to open file!");
+$prebrano = fread($vnos,filesize("day3.txt"));
 fclose($vnos);
-$razbito = preg_split("/\n/", $podatki);
-//part 1
 $podatki = array();
-foreach($razbito as $razbit) {
-	preg_match_all("/(mul\(\d+,\d+\))/", trim($razbit), $ukazi);
-	$podatki[] = $ukazi[0];
-}
+preg_match_all("/(mul\(\d+,\d+\))/", trim($prebrano), $ukazi);
+$podatki[] = $ukazi[0];
 
 $v_stevilke = array();
 foreach($podatki as $podatek) {
@@ -24,8 +20,7 @@ echo 'part 1: '.array_sum($v_stevilke);
 $podatki = array();
 $stevec = 0;
 $zacetek = microtime(true);
-foreach($razbito as $razbit) {
-	$razdeljeno = preg_split("/don't\(\)/", trim($razbit));
+	$razdeljeno = preg_split("/don't\(\)/", trim($prebrano));
 	if($stevec == 0) {
 		preg_match_all("/(mul\(\d+,\d+\))/", trim($razdeljeno[0]), $ukazi2);
 		$podatki[] = $ukazi2[0];
@@ -40,7 +35,6 @@ foreach($razbito as $razbit) {
 			}
 		}
 	}
-}
 
 $v_stevilke = array();
 foreach($podatki as $podatek) {
