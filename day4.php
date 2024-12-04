@@ -12,87 +12,53 @@ for($i = 0; $i < count($razbito); $i++) {
 				$prostorGor = $i > 2;
 				$prostorDol = $i < count($razbito) -3;
 				if($prostorLevo) {
-					if($razbito[$i][$j-1] == "M"){
-						if($razbito[$i][$j-2] == "A"){
-							if($razbito[$i][$j-3] == "S"){
-								$skupaj++;
-							}
-						}
+					if($razbito[$i][$j-1] == "M" && $razbito[$i][$j-2] == "A" && $razbito[$i][$j-3] == "S"){
+						$skupaj++;
 					}
 
 					//diagonala gor
 					if($prostorGor) {
-						if($razbito[$i-1][$j-1] == "M"){
-							if($razbito[$i-2][$j-2] == "A"){
-								if($razbito[$i-3][$j-3] == "S"){
-									$skupaj++;
-								}
-							}
+						if($razbito[$i-1][$j-1] == "M" && $razbito[$i-2][$j-2] == "A" && $razbito[$i-3][$j-3] == "S"){
+							$skupaj++;
 						}
 					}
 					//diagonala dol
 					if($prostorDol) {
-						if($razbito[$i+1][$j-1] == "M"){
-							if($razbito[$i+2][$j-2] == "A"){
-								if($razbito[$i+3][$j-3] == "S"){
-									$skupaj++;
-								}
-							}
+						if($razbito[$i+1][$j-1] == "M" && $razbito[$i+2][$j-2] == "A" && $razbito[$i+3][$j-3] == "S"){
+							$skupaj++;
 						}
 					}
 				}
 				//desno
 				if($prostorDesno) {
-					if($razbito[$i][$j+1] == "M"){
-						if($razbito[$i][$j+2] == "A"){
-							if($razbito[$i][$j+3] == "S"){
-								$skupaj++;
-							}
-						}
+					if($razbito[$i][$j+1] == "M" && $razbito[$i][$j+2] == "A" && $razbito[$i][$j+3] == "S"){
+						$skupaj++;
 					}
 					//diagonala gor
 					if($prostorGor) {
-						if($razbito[$i-1][$j+1] == "M"){
-							if($razbito[$i-2][$j+2] == "A"){
-								if($razbito[$i-3][$j+3] == "S"){
-									$skupaj++;
-								}
-							}
+						if($razbito[$i-1][$j+1] == "M" && $razbito[$i-2][$j+2] == "A" && $razbito[$i-3][$j+3] == "S"){
+							$skupaj++;
 						}
 					}
 					//diagonala dol
 					if($prostorDol) {
-						if($razbito[$i+1][$j+1] == "M"){
-							if($razbito[$i+2][$j+2] == "A"){
-								if($razbito[$i+3][$j+3] == "S"){
-									$skupaj++;
-								}
-							}
+						if($razbito[$i+1][$j+1] == "M" && $razbito[$i+2][$j+2] == "A" && $razbito[$i+3][$j+3] == "S"){
+							$skupaj++;
 						}
 					}
 				}
 
 				if($prostorDol) {
-					if($razbito[$i+1][$j] == "M"){
-						if($razbito[$i+2][$j] == "A"){
-							if($razbito[$i+3][$j] == "S"){
-								$skupaj++;
-							}
-						}
+					if($razbito[$i+1][$j] == "M" && $razbito[$i+2][$j] == "A" && $razbito[$i+3][$j] == "S"){
+						$skupaj++;
 					}
 				}
 				if($prostorGor) {
-					if($razbito[$i-1][$j] == "M"){
-						if($razbito[$i-2][$j] == "A"){
-							if($razbito[$i-3][$j] == "S"){
-								$skupaj++;
-							}
-						}
+					if($razbito[$i-1][$j] == "M" && $razbito[$i-2][$j] == "A" && $razbito[$i-3][$j] == "S"){
+						$skupaj++;
 					}
 				}
 			}
 	}
 }
 echo 'part 1: '.$skupaj;
-
-?>
