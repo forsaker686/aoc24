@@ -18,7 +18,6 @@ foreach($razbito as $razbit) {
 		$pn[] = $razbit;
 	}
 }
-//part 1
 $skupaj = 0;
 $skupaj2 = 0;
 $popravljene = array();
@@ -33,6 +32,7 @@ while($st_loopov <=3) {
 				$poz1 = 0;
 				$poz2 = 0;
 				for($k = 0; $k < count($posamezna); $k++) {
+					//checking every number if it's equal to number 1 and number 2
 					if($posamezna[$k] == $stevilka1) {
 						$poz1 = $k;
 					}
@@ -40,12 +40,7 @@ while($st_loopov <=3) {
 						$poz2 = $k;
 					}
 				}
-				if($stevilka1 == '75' && $stevilka2 == '47') {
-					var_dump('pozicija:'.$i.' - '.$pn[$j]);
-					echo '<br/>';
-					var_dump($stevilka1.':'.$poz1.' '.$stevilka2.':'.$poz2.' '.($poz2 < $poz1));
-					echo '<br/>';
-				}
+				//switching numbers if number2 is before number1
 				if($poz2 < $poz1) {
 					$zacasna = $posamezna[$poz2];
 					$posamezna[$poz2] = $posamezna[$poz1];
@@ -58,6 +53,7 @@ while($st_loopov <=3) {
 	}
 	$st_loopov++;
 }
+//part 1
 for($i=0;$i < count($pn); $i++) {
 	if(!in_array($i, $popravljene)) {
 		$posamezna = explode(",", $pn[$i]);
@@ -66,6 +62,7 @@ for($i=0;$i < count($pn); $i++) {
 		$skupaj+=$sredinska;
 	}
 }
+//part 2
 $popravljene = array_values(array_unique($popravljene));
 for($i=0;$i< count($pn); $i++) {
 	if(in_array($i, $popravljene)) {
