@@ -47,22 +47,11 @@ while($st_loopov <=3) {
 					echo '<br/>';
 				}
 				if($poz2 < $poz1) {
-					// var_dump($pn[$j]);
-					// echo '<br/>';
-					// var_dump($posamezna[$poz1].' '.$posamezna[$poz2]);
-					// echo '<br/>';
-					// var_dump($pn[$j]);
 					$zacasna = $posamezna[$poz2];
 					$posamezna[$poz2] = $posamezna[$poz1];
 					$posamezna[$poz1] = $zacasna;
 					$pn[$j] = implode(",", $posamezna);
 					$popravljene[] = $j;
-					// echo '<pre>';
-					// var_dump($pn[$j]);
-					// echo '</pre>';
-					// $sredinska = round(count($posamezna)/2, 0, PHP_ROUND_HALF_DOWN);
-					// $sredinska = $posamezna[$sredinska];
-					// $skupaj2+=$sredinska;
 				}
 			}
 		}
@@ -80,9 +69,6 @@ for($i=0;$i < count($pn); $i++) {
 $popravljene = array_values(array_unique($popravljene));
 for($i=0;$i< count($pn); $i++) {
 	if(in_array($i, $popravljene)) {
-				// echo '<pre>';
-				// var_dump($pn[$i]);
-				// echo '</pre>';
 		$posamezna = explode(",", $pn[$i]);
 		$sredinska = round(count($posamezna)/2, 0, PHP_ROUND_HALF_DOWN);
 		$sredinska = $posamezna[$sredinska];
@@ -90,7 +76,6 @@ for($i=0;$i< count($pn); $i++) {
 	}
 }
 
-//part 1:5329part 2:5833  - OK
 echo 'part 1:'.$skupaj;
 echo 'part 2:'.$skupaj2;
 
