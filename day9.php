@@ -44,15 +44,17 @@ for($i = 0; $i < count($aString); $i++) {
 	}
 }
 
-//part 2 - not yet finished
+//part 2 - not yet optimized
 krsort($stMest);
-
-for($i=0; $i < $stevec; $i++) {
-	if($aString2[$i] == ".") {
-		foreach($stMest as $key => $value) {
+$stevec = count($aString2);
+foreach($stMest as $key => $value) {
+	unset($stMest[$key]);
+	for($i=0; $i < $stevec; $i++) {
+		if($aString2[$i] == ".") {
 			$menjaj = false;
 			for($k=0; $k < $value; $k++) {
-				if($aString2[$i+$k] == ".") {
+				if(isset($aString2[$i+$k]) && $aString2[$i+$k] == ".") {
+					// var_dump($i.'.'.$k.' '.$key);
 					$menjaj = true;
 					continue;
 				}else {
@@ -65,23 +67,26 @@ for($i=0; $i < $stevec; $i++) {
 					$aString2[$i+$k] = $key;
 				}
 				for($j = count($aString2)-1; $j >= 0; $j--) {
-						if($aString2[$j] == $key) {
-							// for($l = $value; $l >=0; $l--) {
-							for($l = 0; $l < $value; $l++) {
-								$aString2[$j-$l] = ".";
-								continue;
-							}
-							break;
+					if($aString2[$j] == $key) {
+						for($l = 0; $l < $value; $l++) {
+							$aString2[$j-$l] = ".";
 						}
-						// unset($stMest[$key]);
-						
-						
+						break;
+					}
 				}
+				
 			}
-			unset($stMest[$key]);
-			
 		}
 	}
 }
-var_dump(implode("", $aString2));
+
 echo 'part 1: '.array_sum($rezultati);
+
+$rezultati = array();
+for($i = 0; $i < count($aString2); $i++) {
+	if($aString2[$i] !== ".") {
+		$rezultati[] = $i*intval($aString2[$i]);
+	}
+}
+echo '<br/>';
+echo 'part 2: '.array_sum($rezultati);
