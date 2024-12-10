@@ -44,4 +44,44 @@ for($i = 0; $i < count($aString); $i++) {
 	}
 }
 
+//part 2 - not yet finished
+krsort($stMest);
+
+for($i=0; $i < $stevec; $i++) {
+	if($aString2[$i] == ".") {
+		foreach($stMest as $key => $value) {
+			$menjaj = false;
+			for($k=0; $k < $value; $k++) {
+				if($aString2[$i+$k] == ".") {
+					$menjaj = true;
+					continue;
+				}else {
+					$menjaj = false;
+					break;
+				}
+			}
+			if($menjaj) {
+				for($k=0; $k < $value; $k++) {
+					$aString2[$i+$k] = $key;
+				}
+				for($j = count($aString2)-1; $j >= 0; $j--) {
+						if($aString2[$j] == $key) {
+							// for($l = $value; $l >=0; $l--) {
+							for($l = 0; $l < $value; $l++) {
+								$aString2[$j-$l] = ".";
+								continue;
+							}
+							break;
+						}
+						// unset($stMest[$key]);
+						
+						
+				}
+			}
+			unset($stMest[$key]);
+			
+		}
+	}
+}
+var_dump(implode("", $aString2));
 echo 'part 1: '.array_sum($rezultati);
