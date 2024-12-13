@@ -32,6 +32,8 @@ foreach($vrstice as $kljuc => $vrstica) {
 		}
 	}
 }
+
+//part 1
 $skupaj = 0;
 foreach($igra as $play) {
 	$rX = $play['P'][0];
@@ -48,4 +50,21 @@ foreach($igra as $play) {
 }
 echo 'part 1:'.$skupaj;
 
-?>
+
+//part 2
+$skupaj = 0;
+foreach($igra as $play) {
+	$rX = 10000000000000 + $play['P'][0];
+	$rY = 10000000000000 + $play['P'][1];
+	$aX = $play['A'][0];
+	$aY = $play['A'][1];
+	$bX = $play['B'][0];
+	$bY = $play['B'][1];
+	$A = ($rX*$bY - $rY * $bX) / ($aX * $bY - $aY * $bX);
+	$B = ($rY*$aX - $rX * $aY) / ($aX * $bY - $aY * $bX);
+    if (is_int($A) && is_int($B)) {
+        $skupaj += $A * 3 + $B;
+    }
+}
+echo '<br/>';
+echo 'part 2:'.$skupaj;
