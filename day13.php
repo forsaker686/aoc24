@@ -27,44 +27,30 @@ foreach($vrstice as $kljuc => $vrstica) {
 					preg_match_all("/\d+/", $vrednosti[1], $y);
 					$igra[$kljuc]['P'] = [$x[0][0], $y[0][0]];
 				}
-				
 			}
 		}
 	}
 }
-
+function igraj($igra, $dodatek = 0) {
+	$skupaj = 0;
+	foreach($igra as $play) {
+		$rX = $dodatek + $play['P'][0];
+		$rY = $dodatek + $play['P'][1];
+		$aX = $play['A'][0];
+		$aY = $play['A'][1];
+		$bX = $play['B'][0];
+		$bY = $play['B'][1];
+		$A = ($rX*$bY - $rY * $bX) / ($aX * $bY - $aY * $bX);
+		$B = ($rY*$aX - $rX * $aY) / ($aX * $bY - $aY * $bX);
+	    if (is_int($A) && is_int($B)) {
+	        $skupaj += $A * 3 + $B;
+	    }
+	}
+	return $skupaj;
+}
 //part 1
-$skupaj = 0;
-foreach($igra as $play) {
-	$rX = $play['P'][0];
-	$rY = $play['P'][1];
-	$aX = $play['A'][0];
-	$aY = $play['A'][1];
-	$bX = $play['B'][0];
-	$bY = $play['B'][1];
-	$A = ($rX*$bY - $rY * $bX) / ($aX * $bY - $aY * $bX);
-	$B = ($rY*$aX - $rX * $aY) / ($aX * $bY - $aY * $bX);
-    if (is_int($A) && is_int($B)) {
-        $skupaj += $A * 3 + $B;
-    }
-}
-echo 'part 1:'.$skupaj;
-
-
+echo 'part 1:'.igraj($igra).'<br/>';
 //part 2
-$skupaj = 0;
-foreach($igra as $play) {
-	$rX = 10000000000000 + $play['P'][0];
-	$rY = 10000000000000 + $play['P'][1];
-	$aX = $play['A'][0];
-	$aY = $play['A'][1];
-	$bX = $play['B'][0];
-	$bY = $play['B'][1];
-	$A = ($rX*$bY - $rY * $bX) / ($aX * $bY - $aY * $bX);
-	$B = ($rY*$aX - $rX * $aY) / ($aX * $bY - $aY * $bX);
-    if (is_int($A) && is_int($B)) {
-        $skupaj += $A * 3 + $B;
-    }
-}
-echo '<br/>';
-echo 'part 2:'.$skupaj;
+echo 'part 2:'.igraj($igra, 10000000000000);
+
+?>
