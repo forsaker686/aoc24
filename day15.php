@@ -13,33 +13,61 @@ function premakni($grid, $x, $y, $pot) {
 	global $grid;
 		$premikaj = true;
 			if($pot == "dol") {
-				for($i = $y; $i < count($grid) -1; $i++) {
-					if($grid[$i+1][$x] !== "#" && $grid[$i+1][$x] == ".") {
-						$grid[$i][$x] = ".";
-						$grid[$i+1][$x] = "O";
-					}
+				$iteracije = 0;
+				while($grid[$y][$x] == "O" && $grid[$y+1][$x] !== "#") {
+					$grid[$y+1][$x] = "O";
+					$y++;
+					$iteracije++;
 				}
+				if($iteracije>0) {
+					return $iteracije;
+				}
+				else {
+					return $iteracije;
+				}
+
 			}else if($pot == "gor") {
-				for($i = $y; $i < count($grid) -1; $i--) {
-					if($grid[$i-1][$x] !== "#" && $grid[$i-1][$x] == ".") {
-						$grid[$i][$x] = ".";
-						$grid[$i-1][$x] = "O";
-					}
+				$iteracije = 0;
+				while($grid[$y-1][$x] !== "#" && $grid[$y][$x] == "O") {
+					$grid[$y-1][$x] = "O";
+					$y--;
+					$iteracije++;
+				}
+				if($iteracije > 0) {
+					return $iteracije;
+				}else {
+					return $iteracije;
 				}
 
 			}else if($pot == "levo") {
-				for($i = $x ; $i > 0 ; $i--) {
-					if($grid[$y][$i-1] !== "#" && $grid[$y][$i-1] == ".") {
-						$grid[$y][$i] = ".";
-						$grid[$y][$i-1] = "O";
+				$iteracije = 0;
+				while($grid[$y][$x-1] !== "#" && $grid[$y][$x] == "O"){
+						$grid[$y][$x-1] = "O";
+						$x--;
+						$iteracije++;
 					}
+				if($iteracije > 0) {
+					return $iteracije;
+				}else {
+					return $iteracije;
 				}
 			}else {
-				for($i = $x; $i < strlen($grid[$y])-1; $i++) {
-					if($grid[$y][$i+1] !== "#" && $grid[$y][$i+1] == ".") {
-						$grid[$y][$i] = ".";
-						$grid[$y][$i+1] = "O";
+				$iteracije = 0;
+				$xT = $x;
+				if($grid[$y][$x+1] == ".") {
+					$grid[$y][$x+1] = "O";
+					$x++;
+				}
+					while($grid[$y][$x+1] !== "#" && $grid[$y][$x] == "O") {
+						// $grid[$y][$x+1] = "O";
+						$x++;
 					}
+					$grid[$y][$xT] = ".";
+					$iteracije = $x-$xT;
+				if($iteracije > 0) {
+					return $iteracije;
+				}else {
+					return $iteracije;
 				}
 			}
 		}			
@@ -57,47 +85,58 @@ for($k=0; $k < strlen($navodila); $k++) {
 		if($yI-1 >= 0 && $grid[$yI-1][$xI] !== "#") {
 			$yI--;
 			if($grid[$yI][$xI] == "O"){
-				premakni($grid, $xI, $yI, "gor");
+				$it = premakni($grid, $xI, $yI, "gor");
+				if(!$it > 0) {
+					$yI++;
+				}else {
+					$grid[$yI+($it > 2) ? $it : 1][$xI] = ".";
+				}
 			}
-		}else {
-			continue;
 		}
 	}
 	if($navodila[$k] == "<") {
 		if($xI-1 >= 0 && $grid[$yI][$xI-1] !== "#") {
 			$xI--;
 			if($grid[$yI][$xI] == "O"){
-				premakni($grid, $xI, $yI, "levo");
+				// $grid[$yI][$xI] = ".";
+				$it = premakni($grid, $xI, $yI, "levo");
+				if(!$it > 0){
+					$xI++;
+				}else {
+					$grid[$yI][$xI+($it > 2) ? $it : 1] = ".";
+				}
 			}
-		}else {
-			continue;
 		}
 	}
 	if($navodila[$k] == ">") {
 		if($xI+1 <= strlen($grid[$xI]) && $grid[$yI][$xI+1] !== "#") {
-
 			$xI++;
 			if($grid[$yI][$xI] == "O"){
-				premakni($grid, $xI, $yI, "desno");
-				continue;
+				// $grid[$yI][$xI] = ".";
+				$it = premakni($grid, $xI, $yI, "desno");
+				if(!$it > 0) {
+					$xI--;
+				}else {
+					$grid[$yI][$xI-($it > 2) ? $it : 1] = ".";
+				}
 			}
-		}else {
-			continue;
 		}
 	}
 	if($navodila[$k] == "v") {
 		if($yI+1 < count($grid)-1 && $grid[$yI+1][$xI] !== "#") {
 			$yI++;
 			if($grid[$yI][$xI] == "O"){
-				premakni($grid, $xI, $yI, "dol");
-				continue;
-			}else {
-				continue;
+				// $grid[$yI][$xI] = ".";
+				$it = premakni($grid, $xI, $yI, "dol");
+				if(!$it > 0) {
+					$yI--;
+				}else {
+					$grid[$yI-($it > 2) ? $it : 1][$xI] = ".";
+				}
 			}
-		}else {
-			continue;
 		}
 	}
+	var_dump($navodila[$k].' '.$yI.','.$xI.':'.$grid[$yI][$xI]);
 }
 echo '<pre>';
 var_dump(implode(PHP_EOL, $grid));
