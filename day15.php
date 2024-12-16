@@ -1,5 +1,5 @@
 <?php
-//NOT YET FINISHED...NOT EVEN SURE IF IT'S THE RIGHT APROACH.
+//NOT YET FINISHED...MADE IT TROUGH FIRST EXAMPLE...
 $vnos = fopen("day15_e.txt", "r") or die("Unable to open file!");
 $podatki = fread($vnos,filesize("day15_e.txt"));
 fclose($vnos);
@@ -14,12 +14,17 @@ function premakni($grid, $x, $y, $pot) {
 		$premikaj = true;
 			if($pot == "dol") {
 				$iteracije = 0;
+				$yT = $y;
 				while($grid[$y][$x] == "O" && $grid[$y+1][$x] !== "#") {
-					$grid[$y+1][$x] = "O";
+					if($grid[$y+1][$x] == ".") {
+						$grid[$y+1][$x] = "O";
+						$iteracije++;
+						break;
+					}
 					$y++;
-					$iteracije++;
 				}
 				if($iteracije>0) {
+					$grid[$yT][$x] = ".";
 					return $iteracije;
 				}
 				else {
@@ -28,12 +33,18 @@ function premakni($grid, $x, $y, $pot) {
 
 			}else if($pot == "gor") {
 				$iteracije = 0;
+				$yT = $y;
 				while($grid[$y-1][$x] !== "#" && $grid[$y][$x] == "O") {
-					$grid[$y-1][$x] = "O";
+					if($grid[$y-1][$x] == ".") {
+						$grid[$y-1][$x] = "O";
+						$iteracije++;
+						break;
+					}
+					
 					$y--;
-					$iteracije++;
 				}
 				if($iteracije > 0) {
+					$grid[$yT][$x] = ".";
 					return $iteracije;
 				}else {
 					return $iteracije;
@@ -41,12 +52,17 @@ function premakni($grid, $x, $y, $pot) {
 
 			}else if($pot == "levo") {
 				$iteracije = 0;
+				$xT = $x;
 				while($grid[$y][$x-1] !== "#" && $grid[$y][$x] == "O"){
-						$grid[$y][$x-1] = "O";
-						$x--;
+					if($grid[$y][$x-1] == ".") {
 						$iteracije++;
+						$grid[$y][$x-1] = "O";
+						break;
+					}
+						$x--;
 					}
 				if($iteracije > 0) {
+					$grid[$y][$xT] = ".";
 					return $iteracije;
 				}else {
 					return $iteracije;
@@ -54,17 +70,17 @@ function premakni($grid, $x, $y, $pot) {
 			}else {
 				$iteracije = 0;
 				$xT = $x;
-				if($grid[$y][$x+1] == ".") {
-					$grid[$y][$x+1] = "O";
-					$x++;
-				}
 					while($grid[$y][$x+1] !== "#" && $grid[$y][$x] == "O") {
 						// $grid[$y][$x+1] = "O";
+						if($grid[$y][$x+1] == ".") {
+							$iteracije++;
+							$grid[$y][$x+1] = "O";
+							break;
+						}
 						$x++;
 					}
-					$grid[$y][$xT] = ".";
-					$iteracije = $x-$xT;
 				if($iteracije > 0) {
+					$grid[$y][$xT] = ".";
 					return $iteracije;
 				}else {
 					return $iteracije;
@@ -89,7 +105,7 @@ for($k=0; $k < strlen($navodila); $k++) {
 				if(!$it > 0) {
 					$yI++;
 				}else {
-					$grid[$yI+($it > 2) ? $it : 1][$xI] = ".";
+					// $grid[$yI+($it > 2) ? $it : 1][$xI] = ".";
 				}
 			}
 		}
@@ -103,7 +119,7 @@ for($k=0; $k < strlen($navodila); $k++) {
 				if(!$it > 0){
 					$xI++;
 				}else {
-					$grid[$yI][$xI+($it > 2) ? $it : 1] = ".";
+					// $grid[$yI][$xI+($it > 2) ? $it : 1] = ".";
 				}
 			}
 		}
@@ -117,7 +133,7 @@ for($k=0; $k < strlen($navodila); $k++) {
 				if(!$it > 0) {
 					$xI--;
 				}else {
-					$grid[$yI][$xI-($it > 2) ? $it : 1] = ".";
+					// $grid[$yI][$xI-($it > 2) ? $it : 1] = ".";
 				}
 			}
 		}
@@ -131,12 +147,15 @@ for($k=0; $k < strlen($navodila); $k++) {
 				if(!$it > 0) {
 					$yI--;
 				}else {
-					$grid[$yI-($it > 2) ? $it : 1][$xI] = ".";
+					// $grid[$yI-($it > 2) ? $it : 1][$xI] = ".";
 				}
 			}
 		}
 	}
 	var_dump($navodila[$k].' '.$yI.','.$xI.':'.$grid[$yI][$xI]);
+echo '<pre>';
+var_dump(implode(PHP_EOL, $grid));
+echo '</pre>';
 }
 echo '<pre>';
 var_dump(implode(PHP_EOL, $grid));
