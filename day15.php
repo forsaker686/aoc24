@@ -1,7 +1,7 @@
 <?php
-//NOT YET FINISHED...MADE IT TROUGH FIRST EXAMPLE...
-$vnos = fopen("day15_e.txt", "r") or die("Unable to open file!");
-$podatki = fread($vnos,filesize("day15_e.txt"));
+//ONLY PART 1
+$vnos = fopen("day15.txt", "r") or die("Unable to open file!");
+$podatki = fread($vnos,filesize("day15.txt"));
 fclose($vnos);
 $podatki = trim($podatki);
 $vrstice = preg_split("/\n\s/", $podatki);
@@ -99,65 +99,77 @@ for($i=0; $i < count($grid); $i++) {
 for($k=0; $k < strlen($navodila); $k++) {
 	if($navodila[$k] == "^") {
 		if($yI-1 >= 0 && $grid[$yI-1][$xI] !== "#") {
+			// $grid[$yI][$xI] = "@";
 			$yI--;
 			if($grid[$yI][$xI] == "O"){
 				$it = premakni($grid, $xI, $yI, "gor");
 				if(!$it > 0) {
 					$yI++;
+					$grid[$yI][$xI] = ".";
 				}else {
-					// $grid[$yI+($it > 2) ? $it : 1][$xI] = ".";
+					$grid[$yI+1][$xI] = ".";
 				}
 			}
+			$grid[$yI][$xI] = ".";
 		}
 	}
 	if($navodila[$k] == "<") {
 		if($xI-1 >= 0 && $grid[$yI][$xI-1] !== "#") {
 			$xI--;
 			if($grid[$yI][$xI] == "O"){
-				// $grid[$yI][$xI] = ".";
 				$it = premakni($grid, $xI, $yI, "levo");
 				if(!$it > 0){
 					$xI++;
+					$grid[$yI][$xI] = ".";
 				}else {
-					// $grid[$yI][$xI+($it > 2) ? $it : 1] = ".";
+					$grid[$yI][$xI+1] = ".";
 				}
 			}
+			$grid[$yI][$xI] = ".";
 		}
 	}
 	if($navodila[$k] == ">") {
 		if($xI+1 <= strlen($grid[$xI]) && $grid[$yI][$xI+1] !== "#") {
 			$xI++;
 			if($grid[$yI][$xI] == "O"){
-				// $grid[$yI][$xI] = ".";
 				$it = premakni($grid, $xI, $yI, "desno");
 				if(!$it > 0) {
 					$xI--;
+					$grid[$yI][$xI] = ".";
 				}else {
-					// $grid[$yI][$xI-($it > 2) ? $it : 1] = ".";
+					$grid[$yI][$xI-1] = ".";
 				}
 			}
+			$grid[$yI][$xI] = ".";
 		}
 	}
 	if($navodila[$k] == "v") {
 		if($yI+1 < count($grid)-1 && $grid[$yI+1][$xI] !== "#") {
 			$yI++;
 			if($grid[$yI][$xI] == "O"){
-				// $grid[$yI][$xI] = ".";
 				$it = premakni($grid, $xI, $yI, "dol");
 				if(!$it > 0) {
 					$yI--;
+					$grid[$yI][$xI] = ".";
 				}else {
-					// $grid[$yI-($it > 2) ? $it : 1][$xI] = ".";
+					$grid[$yI-1][$xI] = ".";
 				}
 			}
+			$grid[$yI][$xI] = ".";
 		}
 	}
-	var_dump($navodila[$k].' '.$yI.','.$xI.':'.$grid[$yI][$xI]);
-echo '<pre>';
-var_dump(implode(PHP_EOL, $grid));
-echo '</pre>';
 }
+$sestevki = array();
+for($i=0;$i< count($grid);$i++) {
+	for($j=0;$j<strlen($grid[$i]); $j++) {
+		if($grid[$i][$j] == "O") {
+			$sestevki[] = 100 * $i+$j;
+		}
+	}
+}
+
+echo 'part 1: '.array_sum($sestevki);
 echo '<pre>';
-var_dump(implode(PHP_EOL, $grid));
+var_dump(implode("", $grid));
 echo '</pre>';
 ?>
