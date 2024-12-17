@@ -53,6 +53,16 @@ for($i=0; $i < count($grid2); $i++) {
 	}
 }
 var_dump($yI.' '.$xI);
+function enakih() {
+	$stEnakih = 0;
+	for($j=$x; $j < strlen($grid2[$y])-1; $j++) {
+		var_dump($grid2[$y][$j]);
+		if($grid2[$y][$j] == "[") {
+			$stEnakih++;
+		}
+		$j++;
+	}
+}
 function premakni2($grid2, $x, $y, $pot) {
 	global $grid2;
 		$premikaj = true;
@@ -148,19 +158,24 @@ function premakni2($grid2, $x, $y, $pot) {
 				$iteracije = 0;
 				$yT = $y;
 				$zacetna = $grid2[$y][$x];
-				while($grid2[$y-1][$x] !== "#" && $grid2[$y-1][$x+1] !== "#"  && $grid2[$y][$x] == "[" || $grid2[$y][$x] == "]") {
+				var_dump($zacetna);
+				// while($grid2[$y-1][$x] !== "#" && $grid2[$y-1][$x+1] !== "#" && $grid2[$y][$x] == "[" || $grid2[$y][$x] == "]") {
+				while($grid2[$y-1][$x] !== "#" && ($grid2[$y][$x] == "[" || $grid2[$y][$x] == "]")) {
+					var_dump($y.','.$x);
 					if($grid2[$y-1][$x] == ".") {
 						if($grid2[$y][$x] == "[" && $grid2[$y-1][$x+1] !== "#") {
 							$grid2[$y-1][$x] = "[";
 							$grid2[$y-1][$x+1] = "]";
 							$grid2[$y+1][$x+1] = ".";
-							var_dump('sem tle');
+							var_dump('sem tle gor');
 							var_dump($grid2[$y-1][$x].''.$grid2[$y-1][$x+1]);
 							var_dump($grid2[$y][$x].''.$grid2[$y][$x+1]);
+
 							if($grid2[$y][$x-2] == "[" && $grid2[$y-1][$x-1] !== "#") {
 								$grid2[$y-1][$x-2] ="[";
 								$grid2[$y-1][$x-1] ="]";
 								$grid2[$y][$x-2] = ".";
+								var_dump('gor if 2');
 								if($zacetna == "]") {
 									$grid2[$y][$x-1] = "[";
 									$grid2[$y][$x] = "]";
@@ -172,7 +187,9 @@ function premakni2($grid2, $x, $y, $pot) {
 								}
 								
 							}
+							//tukaj
 							if($grid2[$y][$x+2] == "]") {
+								var_dump('gor if 4');
 								$grid2[$y-1][$x+2] ="]";
 								$grid2[$y-1][$x+1] ="[";
 								$grid2[$y][$x+2] = ".";
@@ -188,7 +205,7 @@ function premakni2($grid2, $x, $y, $pot) {
 								}
 							}
 						}else {
-							var_dump('sem tle');
+							var_dump('sem tle 2 - gor');
 							var_dump($grid2[$y-1][$x].''.$grid2[$y-1][$x+1]);
 							var_dump($grid2[$y][$x].''.$grid2[$y][$x+1]);
 							if($grid2[$y][$x] == "]" && $grid2[$y-1][$x-1] !== "#") {
@@ -200,17 +217,17 @@ function premakni2($grid2, $x, $y, $pot) {
 									$grid2[$y][$x-2] = ".";
 									$grid2[$y][$x-1] = ".";
 								}
-								if($grid2[$y][$x+2] == "]" && $grid2[$y-1][$x+2] !== "#") {
-									$grid2[$y-1][$x+2] ="]";
-									$grid2[$y-1][$x+1] ="[";
-									$grid2[$y][$x+2] = ".";
-									$grid2[$y][$x+1] = ".";
-								}
+								// if($grid2[$y][$x+2] == "]" && $grid2[$y-1][$x+2] !== "#") {
+								// 	$grid2[$y-1][$x+2] ="]";
+								// 	$grid2[$y-1][$x+1] ="[";
+								// 	$grid2[$y][$x+2] = ".";
+								// 	$grid2[$y][$x+1] = ".";
+								// }
 							}
 							$grid2[$yT][$x-1] = ".";
 						}
 
-						
+						// var_dump('pod ifem'.' '.$y.','.$x);
 						$iteracije++;
 						break;
 					}
@@ -230,6 +247,7 @@ function premakni2($grid2, $x, $y, $pot) {
 				$iteracije = 0;
 				$xT = $x;
 				while($grid2[$y][$x-1] !== "#" && $grid2[$y][$x-2] !== "#" && $grid2[$y][$x] == "]" || $grid2[$y][$x] == "["){
+					var_dump($grid2[$y][$x].' '.$y.','.$x);
 					var_dump('levo večkrat');
 					if($grid2[$y][$x-1] == ".") {
 						var_dump('levo '. $grid2[$y][$x].' '.$y.','.$x);
@@ -252,6 +270,7 @@ function premakni2($grid2, $x, $y, $pot) {
 				$iteracije = 0;
 				$xT = $x;
 				var_dump('desno');
+					//tle si ostal, naredi funkcijo, ki gleda koliko je enakih
 					while($grid2[$y][$x+1] !== "#" && $grid2[$y][$x+2] !== "#" && $grid2[$y][$x] == "[" || $grid2[$y][$x] == "]") {
 						// $grid[$y][$x+1] = "O";
 						if($grid2[$y][$x+1] == ".") {
@@ -275,13 +294,12 @@ function premakni2($grid2, $x, $y, $pot) {
 		}	
 for($k=0; $k < strlen($navodila); $k++) {
 	var_dump($navodila[$k].' '.$yI.','.$xI);
-echo '<pre>';
-echo (implode(PHP_EOL, $grid2));
-echo '</pre>';
 	if($navodila[$k] == "^") {
 		if($yI-1 >= 1 && $grid2[$yI-1][$xI] !== "#") {
 			// $grid[$yI][$xI] = "@";
+			var_dump('gor v navadnem '.$yI.','.$xI);
 			$yI--;
+			var_dump('gor v navadnem - '.$yI.','.$xI);
 			if($grid2[$yI][$xI] == "[" || $grid2[$yI][$xI] == "]"){
 				$it = premakni2($grid2, $xI, $yI, "gor");
 				if(!$it > 0) {
@@ -305,7 +323,7 @@ echo '</pre>';
 					$grid2[$yI][$xI] = ".";
 				}else {
 					$grid2[$yI][$xI+1] = ".";
-					$grid2[$yI][$xI+2] = ".";
+					// $grid2[$yI][$xI+2] = ".";
 				}
 			}
 			$grid2[$yI][$xI] = ".";
@@ -337,12 +355,24 @@ echo '</pre>';
 					$grid2[$yI][$xI] = ".";
 				}else {
 					$grid2[$yI-1][$xI] = ".";
-					$grid2[$yI-2][$xI] = ".";
+					// $grid2[$yI-2][$xI] = ".";
 				}
 			}
 			$grid2[$yI][$xI] = ".";
 		}
 	}
+	echo '<pre>';
+	for($i=0;$i<count($grid2);$i++) {
+		for($j=0;$j<strlen($grid2[$i]);$j++) {
+			if($i == $yI && $j == $xI) {
+				echo '<span style="color:red;">'.$navodila[$k].'</span>';
+			}else {
+				echo $grid2[$i][$j];
+			}
+		}
+		echo '<br/>';
+	}
+	echo '</pre>';
 }
 echo '<pre>';
 var_dump(implode(PHP_EOL, $grid2));
