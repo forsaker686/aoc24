@@ -48,3 +48,35 @@ foreach($razbito as $kljuc => $zacetna) {
 }
 
 echo 'part 1:'.array_sum($stevilke);
+
+//part 2
+//-2,1,-1,3 - test sequnce. Have no idea how to find the sequence in real input for now....
+$zacetna = 123;
+$banane = array();
+
+function razlika($st, $st2) {
+	return intval($st) - intval($st2);
+}
+foreach($razbito as $kljuc => $zacetna) {
+	$stevilke = array();
+	$stevilke[] = strval(substr(trim($zacetna), -1));
+	for($i=0; $i < 2000; $i++) {
+		$zacetna = mnozi($zacetna);
+		$zacetna = prune($zacetna);
+		$zacetna = deli($zacetna);
+		$zacetna = prune($zacetna);
+		$zacetna = mnozi2($zacetna);
+		$zacetna = prune($zacetna);
+		$stevilke[] = strval(substr($zacetna, -1));
+	}
+	// searching for bananas
+	for($i=1; $i < count($stevilke)-2; $i++) {
+		$razlika = intval($stevilke[$i]) - intval($stevilke[$i-1]);
+		if(razlika($stevilke[$i], $stevilke[$i-1]) == -2 && razlika($stevilke[$i+1], $stevilke[$i]) == 1 && razlika($stevilke[$i+2], $stevilke[$i+1]) == -1 && razlika($stevilke[$i+3], $stevilke[$i+2]) == 3) {
+			$banane[] = $stevilke[$i+3];
+			break;
+		}
+	}
+}
+
+var_dump(array_sum($banane));
