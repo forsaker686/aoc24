@@ -50,6 +50,40 @@ foreach($grupe as $kljuc => $grupa) {
 
 echo 'part 1:'.count($posamezne);
 //dumping the list of all groups
-echo '<pre>';
-var_dump($posamezne);
-echo '</pre>';
+//echo '<pre>';
+//var_dump($posamezne);
+//echo '</pre>';
+
+//part2
+echo '<br/>';
+//https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
+function BronKerbosch($P, $R=[], $X=[], &$posamezne=[]) {
+	global $grupe;
+    if (empty($P) && empty($X)) {
+        // Report R as a maximal clique
+        if(count($R) > count($posamezne)) {
+        	$posamezne = $R;
+        }
+        
+    }
+    foreach ($P as $v) {
+        $neighbors = isset($grupe[$v]) ? array_keys($grupe[$v]) : []; // Get neighbors of vertex v
+        // Recursive call with updated sets
+        BronKerbosch(
+        	array_intersect($P, $neighbors), // P ∩ N(v)
+            array_merge($R, [$v]), // R ∪ {v}
+            array_intersect($X, $neighbors), // X ∩ N(v)
+            $posamezne
+        );
+
+        // Update P and X
+        $P = array_diff($P, [$v]); // P \ {v}
+        $X = array_merge($X, [$v]); // X ∪ {v}
+    }
+    return $posamezne;
+}
+
+$P = array_keys($grupe);
+$posamezne = BronKerbosch($P);
+sort($posamezne);
+echo 'part 2: '.implode(",", $posamezne);
