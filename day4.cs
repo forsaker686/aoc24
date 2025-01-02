@@ -6,6 +6,47 @@ namespace day4
 {
     internal class Program
     {
+        //function for searching x-mas in part 2
+        public static int Isci(string[] vrstica, int i, int j)
+        {
+            int skupaj = 0;
+            var prostorDesno = j < (vrstica[i].Length - 1);
+            var prostorLevo = j >= 1;
+            var prostorGor = i >= 1;
+            var prostorDol = i < (vrstica.Length - 1);
+            if(prostorDesno && prostorLevo && prostorGor && prostorDol)
+            {
+                /*M     S
+                 *   A
+                 *M     S */
+                if (vrstica[i - 1][j-1] == 'M' && vrstica[i + 1][j-1] == 'M' && vrstica[i - 1][j+1] == 'S' && vrstica[i+1][j+1] == 'S')
+                {
+                    skupaj++;
+                }
+                /*S     M
+                 *   A
+                 *S     M*/
+                if (vrstica[i - 1][j-1] == 'S' && vrstica[i + 1][j-1] == 'S' && vrstica[i + 1][j+1] =='M' && vrstica[i-1][j+1] == 'M')
+                {
+                    skupaj++;
+                }
+                /*M     M
+                 *   A
+                 *S     S*/
+                if (vrstica[i - 1][j-1] == 'M' && vrstica[i + 1][j-1] == 'S' && vrstica[i - 1][j+1] == 'M' && vrstica[i + 1][j+1] == 'S')
+                {
+                    skupaj++;
+                }
+                /*S     S
+                 *   A
+                 *M     M*/
+                if (vrstica[i - 1][j-1] == 'S' && vrstica[i + 1][j-1] == 'M' && vrstica[i - 1][j+1] == 'S' && vrstica[i + 1][j+1] == 'M')
+                {
+                    skupaj++;
+                }
+            }
+            return skupaj;
+        }
         static void Main(string[] args)
         {
             string input = @"day4.txt";
@@ -92,6 +133,19 @@ namespace day4
                     }
                 }
                 Console.WriteLine("part 1:" + skupaj);
+                //PART 2
+                int skupaj2 = 0;
+                for (int i = 0; i < vrstica.Length; i++)
+                {
+                    for(int j=0; j<vrstica[i].Length; j++)
+                    {
+                        if (vrstica[i][j] == 'A')
+                        {
+                            skupaj2 += Isci(vrstica, i, j);
+                        }
+                    }
+                }
+                Console.WriteLine("part 2:" + skupaj2);
             }
         }
     }
